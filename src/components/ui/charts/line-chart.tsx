@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   LineChart as RechartsLineChart,
@@ -8,11 +8,11 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
-import { cn } from '@/lib/utils';
+} from "recharts";
+import { cn } from "@/lib/utils";
 
 interface LineChartProps {
-  data: any[];
+  data: unknown[];
   xAxis: string;
   yAxis: string;
   className?: string;
@@ -20,7 +20,7 @@ interface LineChartProps {
 
 export function LineChart({ data, xAxis, yAxis, className }: LineChartProps) {
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn("w-full", className)}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsLineChart
           data={data}
@@ -56,4 +56,4 @@ export function LineChart({ data, xAxis, yAxis, className }: LineChartProps) {
       </ResponsiveContainer>
     </div>
   );
-} 
+}

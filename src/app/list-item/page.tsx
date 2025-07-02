@@ -6,16 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Upload, 
-  Save, 
-  X, 
-  CheckCircle, 
+import {
+  Upload,
+  Save,
+  X,
+  CheckCircle,
   DollarSign,
   Tag,
-  FileText,
-  Image as ImageIcon
+  Image as ImageIcon,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function ListItemPage() {
   const [formData, setFormData] = useState({
@@ -32,36 +32,40 @@ export default function ListItemPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFormData(prev => ({ 
-        ...prev, 
+      setFormData((prev) => ({
+        ...prev,
         image: file,
-        imagePreview: URL.createObjectURL(file)
+        imagePreview: URL.createObjectURL(file),
       }));
-      
+
       if (errors.image) {
-        setErrors(prev => ({ ...prev, image: "" }));
+        setErrors((prev) => ({ ...prev, image: "" }));
       }
     }
   };
 
   const removeImage = () => {
-    setFormData(prev => ({ 
-      ...prev, 
+    setFormData((prev) => ({
+      ...prev,
       image: null,
-      imagePreview: ""
+      imagePreview: "",
     }));
   };
 
@@ -93,20 +97,20 @@ export default function ListItemPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Here you would typically upload to IPFS and create the NFT
       console.log("Creating collectible:", formData);
-      
+
       // Reset form after successful submission
       setFormData({
         name: "",
@@ -118,7 +122,7 @@ export default function ListItemPage() {
         image: null,
         imagePreview: "",
       });
-      
+
       alert("Collectible listed successfully!");
     } catch (error) {
       console.error("Error listing item:", error);
@@ -128,7 +132,18 @@ export default function ListItemPage() {
     }
   };
 
-  const brandOptions = ["Nike", "Adidas", "Converse", "Hermès", "Louis Vuitton", "Chanel", "Rolex", "Omega", "Banksy", "Other"];
+  const brandOptions = [
+    "Nike",
+    "Adidas",
+    "Converse",
+    "Hermès",
+    "Louis Vuitton",
+    "Chanel",
+    "Rolex",
+    "Omega",
+    "Banksy",
+    "Other",
+  ];
   const typeOptions = ["Shoes", "Bags", "Watches", "Art", "Other"];
 
   return (
@@ -138,7 +153,9 @@ export default function ListItemPage() {
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">List New Item</h1>
-            <p className="text-gray-600">Create a new digital collectible listing</p>
+            <p className="text-gray-600">
+              Create a new digital collectible listing
+            </p>
           </div>
 
           <Card>
@@ -158,10 +175,12 @@ export default function ListItemPage() {
                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                     {formData.imagePreview ? (
                       <div className="relative">
-                        <img 
-                          src={formData.imagePreview} 
-                          alt="Preview" 
-                          className="mx-auto max-h-64 rounded-lg"
+                        <Image
+                          src={formData.imagePreview}
+                          alt="Preview"
+                          width={400}
+                          height={400}
+                          className="mx-auto max-h-64 rounded-lg object-contain"
                         />
                         <Button
                           type="button"
@@ -177,7 +196,10 @@ export default function ListItemPage() {
                       <div>
                         <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
                         <div className="mt-4">
-                          <label htmlFor="image-upload" className="cursor-pointer">
+                          <label
+                            htmlFor="image-upload"
+                            className="cursor-pointer"
+                          >
                             <Button type="button" variant="outline">
                               <Upload className="h-4 w-4 mr-2" />
                               Upload Image
@@ -234,12 +256,16 @@ export default function ListItemPage() {
                       }`}
                     >
                       <option value="">Select Brand</option>
-                      {brandOptions.map(brand => (
-                        <option key={brand} value={brand}>{brand}</option>
+                      {brandOptions.map((brand) => (
+                        <option key={brand} value={brand}>
+                          {brand}
+                        </option>
                       ))}
                     </select>
                     {errors.brand && (
-                      <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.brand}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -258,8 +284,10 @@ export default function ListItemPage() {
                       }`}
                     >
                       <option value="">Select Type</option>
-                      {typeOptions.map(type => (
-                        <option key={type} value={type}>{type}</option>
+                      {typeOptions.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
                       ))}
                     </select>
                     {errors.type && (
@@ -297,7 +325,9 @@ export default function ListItemPage() {
                       value={formData.price}
                       onChange={handleInputChange}
                       placeholder="0.00"
-                      className={`pl-10 ${errors.price ? "border-red-500" : ""}`}
+                      className={`pl-10 ${
+                        errors.price ? "border-red-500" : ""
+                      }`}
                     />
                   </div>
                   {errors.price && (
@@ -320,7 +350,9 @@ export default function ListItemPage() {
                     }`}
                   />
                   {errors.description && (
-                    <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.description}
+                    </p>
                   )}
                 </div>
 
@@ -328,12 +360,20 @@ export default function ListItemPage() {
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle className="h-4 w-4 text-blue-600" />
-                    <span className="font-medium text-blue-900">Security Features</span>
+                    <span className="font-medium text-blue-900">
+                      Security Features
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <Badge className="bg-blue-100 text-blue-700">NFT Certificate</Badge>
-                    <Badge className="bg-blue-100 text-blue-700">Authenticity Verification</Badge>
-                    <Badge className="bg-blue-100 text-blue-700">Escrow Protection</Badge>
+                    <Badge className="bg-blue-100 text-blue-700">
+                      NFT Certificate
+                    </Badge>
+                    <Badge className="bg-blue-100 text-blue-700">
+                      Authenticity Verification
+                    </Badge>
+                    <Badge className="bg-blue-100 text-blue-700">
+                      Escrow Protection
+                    </Badge>
                   </div>
                 </div>
 
@@ -367,4 +407,4 @@ export default function ListItemPage() {
       </main>
     </div>
   );
-} 
+}

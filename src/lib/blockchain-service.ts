@@ -3,15 +3,15 @@ import { NFT_ABI, ESCROW_ABI, FRACTIONAL_ABI, REPUTATION_ABI, CONTRACT_ADDRESSES
 import { Collectible, DigitalCertificate } from './types';
 
 // Extend Window interface for ethereum
-declare global {
-  interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-      on: (event: string, callback: (...args: unknown[]) => void) => void;
-      removeListener: (event: string, callback: (...args: unknown[]) => void) => void;
-    };
-  }
-}
+// declare global {
+//   interface Window {
+//     ethereum?: {
+//       request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+//       on: (event: string, callback: (...args: unknown[]) => void) => void;
+//       removeListener: (event: string, callback: (...args: unknown[]) => void) => void;
+//     };
+//   }
+// }
 
 interface NFTMetadata {
   name: string;
@@ -40,7 +40,7 @@ export class BlockchainService {
   constructor() {
     // Initialize provider only on client side
     if (typeof window !== 'undefined' && window.ethereum) {
-      this.provider = new ethers.BrowserProvider(window.ethereum as any);
+      this.provider = new ethers.BrowserProvider(window.ethereum as ethers.Eip1193Provider);
     }
   }
 

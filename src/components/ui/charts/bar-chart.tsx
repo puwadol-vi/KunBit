@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   BarChart as RechartsBarChart,
@@ -8,11 +8,11 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from 'recharts';
-import { cn } from '@/lib/utils';
+} from "recharts";
+import { cn } from "@/lib/utils";
 
 interface BarChartProps {
-  data: any[];
+  data: unknown[];
   xAxis: string;
   yAxis: string;
   className?: string;
@@ -20,7 +20,7 @@ interface BarChartProps {
 
 export function BarChart({ data, xAxis, yAxis, className }: BarChartProps) {
   return (
-    <div className={cn('w-full', className)}>
+    <div className={cn("w-full", className)}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsBarChart
           data={data}
@@ -50,4 +50,4 @@ export function BarChart({ data, xAxis, yAxis, className }: BarChartProps) {
       </ResponsiveContainer>
     </div>
   );
-} 
+}
